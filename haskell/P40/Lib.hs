@@ -54,12 +54,17 @@ primesR :: Integral a => a -> a -> [a]
 primesR x y = filter isPrime [x..y]
 
 
+-- goldback's conjecture:
+-- every even number can be written as the sum of two primes
+-- every odd number can be written as the sum of 3 primes
+-- the odd case follows if the even case is true
+-- if x is odd, the result is (a, b) can be further expanded to (a, b, c)
 goldback :: Integral a => a -> (a, a)
 goldback x =
     head $ filter (\(n, m) -> isPrime n && isPrime m) solutions
     where ps = primesR 2 x
-          goldback_ p = if x <= p then (x, p - x) else (p, x - p)
           solutions = map goldback_ ps
+          goldback_ p = if x <= p then (x, p - x) else (p, x - p)
 
 
 goldbackList :: Integral a => a -> a -> [(a, a)]
