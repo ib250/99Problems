@@ -21,7 +21,7 @@ dupliSpec xs = repliSpec xs (Positive 2)
 
 repliSpec :: [a] -> Positive Int -> Bool
 repliSpec xs (Positive n) =
-    (length (Sol.repli xs n)) == (n * (length xs))
+    length (Sol.repli xs n) == n * length xs
 
 
 dropEverySpec :: Eq a => [a] -> Positive Int -> Bool
@@ -32,7 +32,7 @@ dropEverySpec xs (Positive n) =
 
 splitSpec :: Eq a => [a] -> Int -> Bool
 splitSpec xs n = xs == (lhs ++ rhs)
-    where (lhs, rhs) = (Sol.split xs n)
+    where (lhs, rhs) = Sol.split xs n
 
 
 data Slices a = Slices (NonEmptyList a) Int Int
@@ -50,7 +50,7 @@ instance Arbitrary a => Arbitrary (Slices a) where
 
 sliceSpec :: Eq a => Slices a -> Bool
 sliceSpec (Slices xs i j) =
-    (Sol.slice xs' i j) `List.isInfixOf` xs'
+    Sol.slice xs' i j `List.isInfixOf` xs'
     where xs' = getNonEmpty xs
 
 
@@ -73,7 +73,7 @@ instance Arbitrary a => Arbitrary (Removes a) where
 
 removeAtSpec :: Eq a => Removes a -> Bool
 removeAtSpec (Removes (NonEmpty xs) n) =
-    xs == (take (n - 1) ys) ++ [x] ++ (drop (n - 1) ys)
+    xs == take (n - 1) ys ++ [x] ++ drop (n - 1) ys
     where (x, ys) = Sol.removeAt n xs
     
 

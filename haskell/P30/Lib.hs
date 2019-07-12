@@ -56,7 +56,7 @@ type Solution a = [[a]]
 groupXs :: Eq a => [Int] -> [a] -> [Solution a]
 groupXs ns xs = filter isDisjointParts solutions
     where solutions = sequenceA [f xs | f <- combinations <$> ns]
-          isDisjointParts xs = sum ns == (length $ List.nub (mconcat xs))
+          isDisjointParts xs = sum ns == length (List.nub (mconcat xs))
 
 
 lsort :: [[a]] -> [[a]]

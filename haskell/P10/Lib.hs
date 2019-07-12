@@ -18,7 +18,7 @@ elementAt xs ix = xs !! (ix - 1)
 
 
 myLength :: [a] -> Int
-myLength = Monoid.getSum . foldMap (Monoid.Sum . (const 1))
+myLength = Monoid.getSum . foldMap Monoid.Sum . const 1
 
 
 myReverse :: [a] -> [a]
@@ -28,7 +28,7 @@ myReverse = foldr append' []
 
 isPalindrome :: Eq a => [a] -> Bool
 isPalindrome xs = firstHalf == lastHalf
-    where (n, r) = (length xs) `divMod` 2
+    where (n, r) = length xs `divMod` 2
           firstHalf = take n xs
           lastHalf = drop (n + r) xs
 
@@ -50,8 +50,8 @@ instance Eq a => Semigroup (DupL a) where
     (DupL []) <> rhs = rhs
     lhs <> (DupL []) = lhs
     (DupL lhs) <> (DupL rhs)
-        | last lhs == head rhs = (DupL lhs) <> (DupL (tail rhs))
-        | otherwise = (DupL (lhs <> [head rhs])) <> (DupL (tail rhs))
+        | last lhs == head rhs = DupL lhs <> DupL (tail rhs)
+        | otherwise = DupL (lhs <> [head rhs]) <> DupL (tail rhs)
 
 
 instance Eq a => Monoid (DupL a) where mempty = DupL []
@@ -66,12 +66,12 @@ pack = foldr groupings []
     where groupings :: Eq a => a -> [[a]] -> [[a]]
           groupings x [] = [[x]]
           groupings x (y:ys)
-                | x == head y = ((x:y):ys)
+                | x == head y = (x:y):ys
                 | otherwise = [x]:y:ys
 
 
 rleEncode :: Eq a => [a] -> [(Int, a)]
-rleEncode xs = zip counts (map head $ ids)
+rleEncode xs = zip counts (map head ids)
     where ids = List.group xs
           counts = map length ids
 

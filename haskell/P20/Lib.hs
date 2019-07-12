@@ -26,11 +26,11 @@ rleEncode' = foldr alg []
     where alg :: Eq a => a -> [Encoding a] -> [Encoding a]
           alg x [] = [Single x]
           alg x xs@(Single c:rest)
-                | x == c = (Multiple 2 x):rest
-                | otherwise = (Single x):xs
+                | x == c = Multiple 2 x:rest
+                | otherwise = Single x:xs
           alg x xs@(Multiple n c:rest)
-                | x == c = (Multiple (n + 1) x):rest
-                | otherwise = (Single x):xs
+                | x == c = Multiple (n + 1) x:rest
+                | otherwise = Single x:xs
 
 
 dupli :: [a] -> [a]
@@ -43,7 +43,7 @@ repli xs n = concatMap (replicate n) xs
 
 dropEvery :: [a] -> Int -> [a]
 dropEvery xs n =
-    [e | (ix, e) <- zip [1..] xs , not (ix `mod` n == 0)]
+    [e | (ix, e) <- zip [1..] xs , ix `mod` n /= 0]
 
 
 split :: [a] -> Int -> ([a], [a])
@@ -60,4 +60,4 @@ rotate xs n | n >= 0 = drop n xs ++ take n xs
 
 
 removeAt :: Int -> [a] -> (a, [a])
-removeAt n xs = (xs !! (n - 1),  (take (n - 1) xs) ++ (drop n xs))
+removeAt n xs = (xs !! (n - 1),  take (n - 1) xs ++ drop n xs)

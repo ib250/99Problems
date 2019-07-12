@@ -7,5 +7,4 @@ import Test.QuickCheck
 
 
 main :: IO ()
-main = do
-    quickCheck (const False :: String -> Bool)
+main = quickCheck (const False :: String -> Bool)
