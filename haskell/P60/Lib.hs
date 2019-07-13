@@ -41,3 +41,29 @@ balancedTrees n x =
 symmetric :: Tree a -> Bool
 symmetric Empty = True
 symmetric (Branch _ lhs rhs) = depth lhs == depth rhs
+
+
+construct :: Ord a => [a] -> Tree a
+construct = foldl alg Empty
+    where alg :: Ord a => Tree a -> a -> Tree a
+          alg Empty x = leaf x
+          alg (Branch y lhs rhs) x
+                | x < y = Branch y (alg lhs x) rhs
+                | otherwise = Branch y lhs (alg rhs x)
+
+
+symmetricBalancedTrees :: Natural -> a -> [Tree a]
+symmetricBalancedTrees = curry $ filter symmetric . uncurry balancedTrees
+
+
+heightBalancedTrees :: Natural -> a -> [Tree a]
+heightBalancedTrees 0 x = [Empty]
+heightBalancedTrees 1 x = [leaf x]
+heightBalancedTrees n x =
+    let
+        (l, r) = (n - 1, n - 2)
+    in trees_ l r <> trees_ r l
+    where trees_ i j = [ Branch x lhs rhs
+                       | lhs <- heightBalancedTrees i x
+                       , rhs <- heightBalancedTrees j x
+                       ]
