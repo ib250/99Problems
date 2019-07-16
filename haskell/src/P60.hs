@@ -1,6 +1,4 @@
-
-module Lib where
-
+module P60 where
 
 import Numeric.Natural
 

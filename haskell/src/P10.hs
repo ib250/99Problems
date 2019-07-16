@@ -1,5 +1,5 @@
 
-module Lib where
+module P10 where
 
 import qualified Data.List as List
 import qualified Data.Monoid as Monoid
@@ -18,7 +18,7 @@ elementAt xs ix = xs !! (ix - 1)
 
 
 myLength :: [a] -> Int
-myLength = Monoid.getSum . foldMap Monoid.Sum . const 1
+myLength = Monoid.getSum . foldMap (Monoid.Sum . const 1)
 
 
 myReverse :: [a] -> [a]

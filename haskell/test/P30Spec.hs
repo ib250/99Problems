@@ -1,8 +1,8 @@
 
 
-module Spec where
+module P30Spec where
 
-import qualified Lib as P30
+import qualified P30
 import Test.QuickCheck
 
 

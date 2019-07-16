@@ -1,31 +1,31 @@
-module Spec where
+module P10Spec where
 
-import qualified Lib as Sol
+import qualified P10
 import qualified Data.Set as Set
 import Test.QuickCheck
 
 
 lastSpec :: Eq a => NonEmptyList a -> Bool
-lastSpec (NonEmpty xs) = last xs == Sol.myLast xs
+lastSpec (NonEmpty xs) = last xs == P10.myLast xs
 
 
 butLastSpec :: Eq a => NonEmptyList a -> Bool
 butLastSpec (NonEmpty xs)
     | length xs == 1 = True
-    | otherwise = xs !! (length xs - 2) == Sol.myButLast xs
+    | otherwise = xs !! (length xs - 2) == P10.myButLast xs
 
 
 lengthSpec :: [a] -> Bool
-lengthSpec xs = length xs == Sol.myLength xs
+lengthSpec xs = length xs == P10.myLength xs
 
 
 reverseSpec :: Eq a => [a] -> Bool
-reverseSpec xs = reverse xs == Sol.myReverse xs
+reverseSpec xs = reverse xs == P10.myReverse xs
 
 
 isPalindromeSpec :: Eq a => [a] -> Bool
 isPalindromeSpec xs
-    | Sol.isPalindrome xs = xs == reverse xs
+    | P10.isPalindrome xs = xs == reverse xs
     | otherwise = True
 
 
@@ -34,17 +34,17 @@ compressSpec xs =
     length compressed >= length setCompressed
     &&
     all (`elem` xs) compressed
-    where compressed = Sol.compress xs
+    where compressed = P10.compress xs
           setCompressed = Set.fromList xs
 
 
 packSpec :: Eq a => [a] -> Bool
-packSpec xs = (concat . Sol.pack) xs == xs
+packSpec xs = (concat . P10.pack) xs == xs
 
 
 rleEncodeSpec :: Eq a => [a] -> Bool
 rleEncodeSpec xs =
-    xs == (Sol.rleDecode . Sol.rleEncode) xs
+    xs == (P10.rleDecode . P10.rleEncode) xs
     
 main :: IO ()
 main = do

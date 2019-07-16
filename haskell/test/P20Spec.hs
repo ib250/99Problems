@@ -1,18 +1,18 @@
 
-module Spec where
+module P20Spec where
 
-import qualified Lib as Sol
+import qualified P20
 import qualified Data.List as List
 import Test.QuickCheck
 
 
 rleSpec :: Eq a => [a] -> Bool
 rleSpec xs =
-    xs == (Sol.rleDecode . Sol.rleEncode) xs
+    xs == (P20.rleDecode . P20.rleEncode) xs
     &&
-    xs == (Sol.rleDecode . Sol.rleEncode') xs
+    xs == (P20.rleDecode . P20.rleEncode') xs
     &&
-    Sol.rleEncode' xs == Sol.rleEncode xs
+    P20.rleEncode' xs == P20.rleEncode xs
 
 
 dupliSpec :: [a] -> Bool
@@ -21,18 +21,18 @@ dupliSpec xs = repliSpec xs (Positive 2)
 
 repliSpec :: [a] -> Positive Int -> Bool
 repliSpec xs (Positive n) =
-    length (Sol.repli xs n) == n * length xs
+    length (P20.repli xs n) == n * length xs
 
 
 dropEverySpec :: Eq a => [a] -> Positive Int -> Bool
 dropEverySpec xs (Positive n) =
     all (`elem` xs) ys && length ys <= length xs
-    where ys = Sol.dropEvery xs n
+    where ys = P20.dropEvery xs n
 
 
 splitSpec :: Eq a => [a] -> Int -> Bool
 splitSpec xs n = xs == (lhs ++ rhs)
-    where (lhs, rhs) = Sol.split xs n
+    where (lhs, rhs) = P20.split xs n
 
 
 data Slices a = Slices (NonEmptyList a) Int Int
@@ -50,14 +50,14 @@ instance Arbitrary a => Arbitrary (Slices a) where
 
 sliceSpec :: Eq a => Slices a -> Bool
 sliceSpec (Slices xs i j) =
-    Sol.slice xs' i j `List.isInfixOf` xs'
+    P20.slice xs' i j `List.isInfixOf` xs'
     where xs' = getNonEmpty xs
 
 
 rotateSpec :: Eq a => [a] -> NonZero Int -> Bool
 rotateSpec xs (NonZero n) =
-    xs == Sol.rotate ys (-n)
-    where (l, ys) = (length xs, Sol.rotate xs n)
+    xs == P20.rotate ys (-n)
+    where (l, ys) = (length xs, P20.rotate xs n)
 
 
 data Removes a = Removes (NonEmptyList a) Int
@@ -74,7 +74,7 @@ instance Arbitrary a => Arbitrary (Removes a) where
 removeAtSpec :: Eq a => Removes a -> Bool
 removeAtSpec (Removes (NonEmpty xs) n) =
     xs == take (n - 1) ys ++ [x] ++ drop (n - 1) ys
-    where (x, ys) = Sol.removeAt n xs
+    where (x, ys) = P20.removeAt n xs
     
 
 main :: IO ()

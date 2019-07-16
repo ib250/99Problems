@@ -1,6 +1,4 @@
-{-# Language ScopedTypeVariables #-}
-
-module Lib where
+module P40 where
 
 
 import qualified Data.List as List

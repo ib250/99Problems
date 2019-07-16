@@ -1,5 +1,5 @@
 
-module Lib where
+module P20 where
 
 import qualified Data.List as List
 
