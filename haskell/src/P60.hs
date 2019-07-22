@@ -2,7 +2,6 @@ module P60 where
 
 import Numeric.Natural
 
-
 data Tree a = Empty
             | Branch a (Tree a) (Tree a)
             deriving (Eq, Show)
@@ -23,12 +22,11 @@ nElems (Branch _ lhs rhs) = 1 + nElems lhs + nElems rhs
 
 
 balancedTrees :: Natural -> a -> [Tree a]
-balancedTrees 0 x = [Empty]
+balancedTrees 0 _ = [Empty]
 balancedTrees 1 x = [leaf x]
 balancedTrees n x =
     let
-        l = (n - 1) `div` 2
-        r = (n - 1) - l
+        (l, r) = ((n - 1) `div` 2, (n - 1) - l)
     in trees_ l r <> trees_ r l
     where trees_ i j = [ Branch x lhs rhs
                        | lhs <- balancedTrees i x
@@ -55,7 +53,7 @@ symmetricBalancedTrees = curry $ filter symmetric . uncurry balancedTrees
 
 
 heightBalancedTrees :: Natural -> a -> [Tree a]
-heightBalancedTrees 0 x = [Empty]
+heightBalancedTrees 0 _ = [Empty]
 heightBalancedTrees 1 x = [leaf x]
 heightBalancedTrees n x =
     let
@@ -65,3 +63,9 @@ heightBalancedTrees n x =
                        | lhs <- heightBalancedTrees i x
                        , rhs <- heightBalancedTrees j x
                        ]
+
+
+heightBalancedTreeNodes :: Natural -> a -> [Tree a]
+heightBalancedTreeNodes 0 _ = [Empty]
+heightBalancedTreeNodes 1 x = [leaf x]
+heightBalancedTreeNodes n x = undefined -- TODO

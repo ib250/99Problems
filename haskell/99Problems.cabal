@@ -22,6 +22,8 @@ library
       P30
       P40
       P60
+      P70
+      P80
   hs-source-dirs:
       src
   build-depends:
@@ -43,6 +45,8 @@ test-suite spec
       P30Spec
       P40Spec
       P60Spec
+      P70Spec
+      P80Spec
   build-depends:
       99Problems
     , base >= 4.7 && <5
