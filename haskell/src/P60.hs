@@ -34,6 +34,13 @@ balancedTrees n x =
                        ]
 
 
+isBalancedTree :: Tree a -> Bool
+isBalancedTree Empty = True
+isBalancedTree (Branch _ lhs rhs) =
+    dl == dr || dr + 1 == dl || dl + 1 == dr
+    where (dl, dr) = (depth lhs, depth rhs)
+
+
 symmetric :: Tree a -> Bool
 symmetric Empty = True
 symmetric (Branch _ lhs rhs) = depth lhs == depth rhs

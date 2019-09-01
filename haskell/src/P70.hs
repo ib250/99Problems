@@ -4,7 +4,7 @@ module P70 where
 
 import Numeric.Natural
 import qualified Data.List as List
-import P60 (Tree(..), leaf)
+import P60 (Tree(..), leaf, depth)
 
 
 countLeaves :: Tree a -> Natural
@@ -39,8 +39,11 @@ atLevel n (Branch _ lhs rhs) =
 
 -- TODOs ...
 
-completeBinaryTree :: Natural -> Tree a -> [a]
-completeBinaryTree = undefined
+completeBinaryTree :: Natural -> a -> Tree a
+completeBinaryTree 0 _ = Empty
+completeBinaryTree 1 x = leaf x
+completeBinaryTree n x = undefined
+    
 
 
 layout :: Tree a -> Tree (a, (Natural, Natural))

@@ -7,9 +7,8 @@ import System.Random
 
 
 insertAt :: a -> [a] -> Int -> [a]
-insertAt x xs n = foldr alg [] xs
-    where alg y rest | length rest == n = x:rest
-                     | otherwise = y:rest
+insertAt x xs n = lhs ++ [x] ++ rhs
+    where (lhs, rhs) = List.splitAt (n - 1) xs
 
 
 range :: Int -> Int -> [Int]
